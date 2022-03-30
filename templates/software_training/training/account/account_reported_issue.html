@@ -29,21 +29,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% if n %} {% for t in n %}
                             <tr>
-                                <td>1</td>
-                                <td>
-                                    John
+                                <td>{{forloop.counter}}</td>
+                                <td class="text-wrap text-justify">
+                                    {{t.reported_issue_reporter.fullname}}
                                 </td>
-                                <td class="text-wrap text-justify">server issue</td>
+
+                                <td class="text-wrap text-justify">{{t.reported_issue_issue}}</td>
+
                                 <td>
+                                    {% if t.reported_issue_issuestatus == '0' %}
+
                                     <div class="badge badge-outline-danger" style="width: 105px;">
                                         <i class="mdi mdi-playlist-remove"></i>&nbsp; Un-Verified
                                     </div>
+
+                                    {% else %}
+
                                     <div class="badge badge-outline-success" data-toggle="modal" data-target="#myModal{{t.id}}" style="width: 105px;">
                                         <i class="mdi mdi-playlist-check"></i>&nbsp; Verified
                                     </div>
+                                    {% endif %}
+
                                 </td>
                             </tr>
+
+                            {% endfor %}{% else %}
+                            <h5>Nothing to display...</h5>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -51,9 +65,9 @@
         </div>
     </div>
 </div>
-
+{% for t in n %}
 <!-- Modal -->
-<div class="modal" id="myModal">
+<div class="modal" id="myModal{{t.id}}">
     <div class="modal-dialog">
         <div class="col-12 col-sm-12 col-md-11 col-lg-12 grid-margin stretch-card bg-dark text-light modal-content">
             <!-- Modal Header -->
@@ -67,7 +81,7 @@
                     <div class="card-body">
                         <div class="row">
                             <p class="col-12 grid-margin stretch-card text-wrap text-justify text-light" style="background-color: dark-grey;width: 400px;
-                                " rows="6">Issue solved.</p>
+                                " rows="6">{{t.reported_issue_reply}}</p>
                         </div>
                     </div>
                 </div>
@@ -77,8 +91,7 @@
             </div>
         </div>
     </div>
-</div>
-
+</div>{% endfor %}
 <!-- modal end -->
 <script>
     function myFunction() {
@@ -88,7 +101,7 @@
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {

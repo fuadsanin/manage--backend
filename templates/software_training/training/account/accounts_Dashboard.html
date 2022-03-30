@@ -25,15 +25,15 @@
         <div class="card">
             <div class="card-body">
                 <center>
-                    {% for i in mem %}
+
                     <h3 class="card-title">PROFILE</h3>
-                    <img src="{{i.photo.url}}" alt="image" style="border-radius: 50%; width:100px; height:100px;" />
+                    <img src="{{mem.photo.url}}" alt="image" style="border-radius: 50%; width:100px; height:100px;" />
                     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                         <div class="text-md-center text-xl-left">
                             <h6 class="mb-1">Joining Date</h6>
                         </div>
                         <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                            <h6 class="text-muted mb-0">{{i.joiningdate}}</h6>
+                            <h6 class="text-muted mb-0">{{mem.joiningdate}}</h6>
                         </div>
                     </div>
                     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
@@ -41,7 +41,7 @@
                             <h6 class="mb-1">Desigination</h6>
                         </div>
                         <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                            <h6 class="text-muted mb-0">{{i.designation.designation_name}}</h6>
+                            <h6 class="text-muted mb-0">{{mem.designation.designation_name}}</h6>
                         </div>
                     </div>
                 </center>
@@ -65,7 +65,7 @@
                                         <h6 class="preview-subject">NAME</h6>
                                     </div>
                                     <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                        <h6 class="preview-subject"> {{i.fullname}}</h6>
+                                        <h6 class="preview-subject"> {{mem.fullname}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="me-auto text-sm-right pt-2 pt-sm-0">
 
-                                        <h6 class="preview-subject">{{i.email}}</h6>
+                                        <h6 class="preview-subject">{{mem.email}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                         <h6 class="preview-subject">CONTACT NUMBER</h6>
                                     </div>
                                     <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                        <h6 class="preview-subject">{{i.mobile}}</h6>
+                                        <h6 class="preview-subject">{{mem.mobile}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
             </div>
         </div>
     </div>
-    {% endfor %}
+
 </div>
 
 {%endblock%}

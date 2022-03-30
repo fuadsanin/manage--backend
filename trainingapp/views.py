@@ -573,18 +573,15 @@ def Admin_coursedetails(request):
 
 #******************accounts****************
 
-
 def accounts_Dashboard(request):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
-
         mem = user_registration.objects.filter(id=acc_id)
     
         return render(request, 'software_training/training/account/accounts_Dashboard.html',{'mem':mem})
     else:
         return redirect('/')
-
 
 def accounts_registration_details(request):
 
@@ -607,9 +604,9 @@ def accounts_payment_detail_list(request, id):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
         a = user_registration.objects.get(id=id)
-        c = course.objects.get(id=a.course_id)
-        pay = paymentlist.objects.filter(paymentlist_user_id_id = a.id).order_by('-id')
-        return render(request,'accounts_payment_detail_list.html',{ 'z' : mem, 'pay': pay , 'a':a , 'c':c})
+        c = course.objects.get(id=a.course_id)  
+        pay = paymentlist.objects.filter(paymentlist_user_id_id= a.id).order_by('-id')
+        return render(request,'software_training/training/account/accounts_payment_detail_list.html',{ 'mem' : mem, 'pay': pay , 'a':a , 'c':c})
     else:
         return redirect('/')
 
@@ -631,14 +628,50 @@ def accounts_payment_salary(request):
 def accounts_payment_view(request):
     return render(request, 'software_training/training/account/account_payment_view.html')
 
-def accounts_report_issue(request):
-    return render(request, 'software_training/training/account/account_report_issue.html')
 
 def accounts_report(request):
-    return render(request, 'software_training/training/account/account_report.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        return render(request,'software_training/training/account/account_report.html',{'mem':mem})
+    else:
+        return redirect('/')
+
+def accounts_report_issue(request):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+
+        if request.session.has_key('acc_designation_id'):
+            acc_designation_id = request.session['acc_designation_id']
+
+        mem = user_registration.objects.filter(id=acc_id)
+        des = designation.objects.get(designation_name = 'manager')
+        #cut = user_registration.objects.get(designation_id=des.id)
+        vars = reported_issue()
+        if request.method == 'POST':
+            vars.reported_issue_issue=request.POST['issue']
+            vars.reported_issue_reporter = user_registration.objects.get(id=acc_id)
+            vars.reported_issue_reported_date=datetime.now()
+            vars.reported_issue_issuestatus=0
+            vars. reported_issue_designation_id = designation.objects.get(id=acc_designation_id)
+            vars.reported_issue_reported_to= user_registration.objects.get(designation_id=des.id)
+            vars.save()
+            return redirect('/softwareapp/accounts_report')
+        return render(request, 'software_training/training/account/account_report_issue.html',{'mem':mem})
+    else:
+        redirect('/')   
 
 def accounts_reported_issue(request):
-    return render(request, 'software_training/training/account/account_reported_issue.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        n = reported_issue.objects.filter(reported_issue_reporter=acc_id).order_by('-id')
+        return render(request, 'software_training/training/account/account_reported_issue.html',{'mem':mem, 'n':n})
+    else:
+        redirect('/')
 
 def accounts_acntpay(request):
     return render(request, 'software_training/training/account/accounts_acntpay.html')
@@ -659,18 +692,37 @@ def accounts_emp_dep(request, id):
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
-        mem = course.objects.get(id=id)
+        mem1 = course.objects.get(id=id)
         des=designation.objects.all()
-        context = {'mem':mem,'des':des,'z' : mem}
+        context = {'mem1':mem1,'des':des,'mem' : mem}
         return render(request, 'software_training/training/account/accounts_emp_dep.html', context)
     else:
         return redirect('/')
     
-def accounts_emp_list(request):
-    return render(request, 'software_training/training/account/accounts_emp_list.html')
-
-def accounts_emp_details(request):
-    return render(request, 'software_training/training/account/accounts_emp_details.html')
+def accounts_emp_list(request, id , pk):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)  
+        mem2 = designation.objects.get(pk=pk)
+        a = course.objects.get(id=id)
+        use=user_registration.objects.filter(course_id=a,designation=mem2)
+        context = {'use':use,'mem' : mem}
+        return render(request, 'software_training/training/account/accounts_emp_list.html', context)
+    else:
+        return redirect('/')
+    
+def accounts_emp_details(request, id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)  
+        vars=user_registration.objects.get(id=id)
+        context = {'vars':vars,'mem' : mem}
+        return render(request, 'software_training/training/account/accounts_emp_details.html', context)
+    else:
+        return redirect('/')
+    
 
 def accounts_add_bank_acnt(request):
     return render(request, 'software_training/training/account/accounts_add_bank_acnt.html')
@@ -697,28 +749,28 @@ def accounts_expenses_viewEdit(request, id):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
         var=acntexpensest.objects.filter(id=id)
-        return render(request, 'software_training/training/account/accounts_expenses_viewEdit.html',{'z':mem, 'var':var})
+        return render(request, 'software_training/training/account/accounts_expenses_viewEdit.html',{'mem':mem, 'var':var})
     else:
         return redirect('/')
-
+    
 
 def accounts_expenses_viewEdit_Update(request, id):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
-        if request.method == 'POST':
-            emps = acntexpensest.objects.get(id=id)
-            emps.payee = request.POST['payee']
-            emps.payacnt = request.POST['payacnt']
-            emps.paymethod = request.POST['paymod']
-            emps.paydate = request.POST['paydt']
-            emps.category = request.POST['category']
-            emps.description = request.POST['description']
-            emps.refno = request.POST['ref']
-            emps.amount = request.POST['amount']
-            emps.tax = request.POST['tax']
-            emps.total = request.POST['total']                
+        emps = acntexpensest.objects.get(id=id)
+        if request.method == 'POST':            
+            emps.acntexpensest_payee = request.POST['payee']
+            emps.acntexpensest_payacnt = request.POST['payacnt']
+            emps.acntexpensest_paymethod = request.POST['paymod']
+            emps.acntexpensest_paydate = request.POST['paydt']
+            emps.acntexpensest_category = request.POST['category']
+            emps.acntexpensest_description = request.POST['description']
+            emps.acntexpensest_refno = request.POST['ref']
+            emps.acntexpensest_amount = request.POST['amount']
+            emps.acntexpensest_tax = request.POST['tax']
+            emps.acntexpensest_total = request.POST['total']                
             emps.save() 
             return redirect('/softwareapp/accounts_expenses')
         return render(request,'software_training/training/account/accounts_expenses_viewEdit.html',{'mem':mem})
@@ -758,18 +810,53 @@ def accounts_print(request):
     return render(request, 'software_training/training/account/accounts_print.html')
 
 def accounts_payment(request):
-    return render(request,'software_training/training/account/accounts_payment.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        des = course.objects.all()
+        return render(request, 'software_training/training/account/accounts_payment.html', {'des' : des ,'mem' : mem})
+    else:
+        return redirect('/')
+  
+def accounts_payment_dep(request, id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        mem1 = course.objects.get(id=id)
+        des = designation.objects.all()
+        context = {'mem1':mem1,'des':des,'mem' : mem}
+        return render(request, 'software_training/training/account/accounts_payment_dep.html',context)
+    else:
+        return redirect('/')
 
-def accounts_payment_dep(request):
-    return render(request, 'software_training/training/account/accounts_payment_dep.html')
-
-def accounts_payment_list(request):
-    return render(request, 'software_training/training/account/accounts_payment_list.html')
+def accounts_payment_list(request,id,pk):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        var = course.objects.get(id=id)
+        mem1 = designation.objects.get(pk=pk)
+        use=user_registration.objects.filter(course_id=var,designation=mem1)
+        context = {'use':use, 'mem':mem}
+        return render(request,'software_training/training/account/accounts_payment_list.html',context)
+    else:
+        return redirect('/')
 
 def accounts_payment_details(request):
+
     return render(request, 'software_training/training/account/accounts_payment_details.html')
 
 
 
 def accounts_payslip(request):
-    return render(request, 'software_training/training/account/accounts_payslip.html')
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)   
+        des = designation.objects.all()
+        return render(request, 'software_training/training/account/accounts_payslip.html', {'des':des,'mem':mem})      
+    else:
+        return redirect('/')
+    

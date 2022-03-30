@@ -56,13 +56,13 @@
                     <div class="profile-desc">
                         <div class="profile-pic">
                             <div class="count-indicator">
-                                {% for i in mem %}
-                                <img class="img-xs rounded-circle " src="{{i.photo.url}}" alt="">
+                                {% for mem in mem %}
+                                <img class="img-xs rounded-circle " src="{{mem.photo.url}}" alt="">
                                 <span class="count bg-success"></span>
                             </div>
                             <div class="profile-name">
-                                <h5 class="mb-0 font-weight-normal">{{i.fullname}}</h5>
-                                <span>{{i.designation.designation_name}}</span>
+                                <h5 class="mb-0 font-weight-normal">{{mem.fullname}}</h5>
+                                <span>{{mem.designation.designation_name}}</span>
                             </div>
                         </div>
                         <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -128,7 +128,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="{% url 'accounts_payslip' %}">
+                    <a class="nav-link" href="/softwareapp/accounts_payslip/">
 
                         <span class="menu-icon">
                 <i class="mdi mdi-chart-bar"></i>
@@ -154,21 +154,14 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="{% url 'accounts_report' ">
+                    <a class="nav-link" href="/softwareapp/accounts_report/">
                         <span class="menu-icon">
                 <i class="mdi mdi-file-document-box"></i>
               </span>
                         <span class="menu-title">Reported Issue</span>
                     </a>
                 </li>
-                <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_coursefee">
-                        <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-                        <span class="menu-title"> Course Fee</span>
-                    </a>
-                </li>
+
             </ul>
         </nav>
         <!-- partial -->
@@ -188,8 +181,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                                 <div class="navbar-profile">
-                                    <img class="img-xs rounded-circle" src="{{i.photo.url}}" alt=" ">
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name ">{{i.fullname}}</p>
+                                    <img class="img-xs rounded-circle" src="{{mem.photo.url}}" alt=" ">
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name ">{{mem.fullname}}</p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block "></i>
                                 </div>
                             </a>

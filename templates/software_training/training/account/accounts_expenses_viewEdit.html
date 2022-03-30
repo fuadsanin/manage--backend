@@ -8,7 +8,7 @@
                     <div class="row">
                         <h5>EXPENSES</h5>
                         <div class="h-divider"></div><br><br> {% for i in var %}
-                        <form action="/softwareapp/accounts_expenses_viewEdit_Update/{{i.id}}" method="post" autocomplete="off">
+                        <form action="/softwareapp/accounts_expenses_viewEdit_Update/{{i.id}}/" method="post" autocomplete="off">
                             {% csrf_token %}
                             <div class="row">
                                 <input type="hidden" class="form-control" name="team_id" value="">

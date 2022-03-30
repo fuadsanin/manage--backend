@@ -28,36 +28,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-href="/softwareapp/accounts_payment_details/">
-                                <td>1</td>
+                            {% for i in use %}
+                            <tr data-href="/softwareapp/account_payment_details/{{i.id}}/">
+                                <td>{{ forloop.counter }}</td>
+
                                 <td>
-                                    <img src="{% static 'softwareapp/assets/images/faces/face5.jpg' %}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
-                                    <span class="ps-2">John Smith</span></a>
+                                    <img src="{{media_url}}{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
+                                    <span class="ps-2">{{i.fullname}}</span></a>
                                 </td>
-                                <td>25/02/2021</td>
-                                <td>2/03/2022</td>
-                                <td>15/03/2022</td>
+                                <td>{{i.joiningdate}}</td>
+                                <td>{{i.startdate}}</td>
+                                <td>{{i.enddate}}</td>
                             </tr>
-                            <tr data-href="/softwareapp/accounts_payment_details/">
-                                <td>2</td>
-                                <td>
-                                    <img src="{% static 'softwareapp/assets/images/faces/face5.jpg' %}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
-                                    <span class="ps-2">John Smith</span></a>
-                                </td>
-                                <td>25/02/2021</td>
-                                <td>2/03/2022</td>
-                                <td>15/03/2022</td>
-                            </tr>
-                            <tr data-href="/softwareapp/accounts_payment_details/">
-                                <td>3</td>
-                                <td>
-                                    <img src="{% static 'softwareapp/assets/images/faces/face5.jpg' %}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
-                                    <span class="ps-2">John Smith</span></a>
-                                </td>
-                                <td>25/02/2021</td>
-                                <td>2/03/2022</td>
-                                <td>15/03/2022</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
