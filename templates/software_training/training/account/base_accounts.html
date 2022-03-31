@@ -67,7 +67,7 @@
                         </div>
                         <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
                         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                            <a href="/softwareapp/account_accounts/" class="dropdown-item preview-item">
+                            <a href="{% url 'account_accounts' %}" class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-dark rounded-circle">
                                         <i class="mdi mdi-settings text-primary"></i>
@@ -78,7 +78,7 @@
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="/softwareapp/changepassword_accounts/" class="dropdown-item preview-item">
+                            <a href="{% url 'changepassword_accounts' %}" class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-dark rounded-circle">
                                         <i class="mdi mdi-onepassword  text-info"></i>
@@ -96,7 +96,7 @@
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_Dashboard/">
+                    <a class="nav-link" href="{% url 'accounts_Dashboard' %}">
                         <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -104,7 +104,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_registration_details/">
+                    <a class="nav-link" href="{% url 'accounts_registration_details' %}">
                         <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
@@ -112,7 +112,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_employee/">
+                    <a class="nav-link" href="{% url 'accounts_emp_dep' %}">
                         <span class="menu-icon">
                 <i class="mdi mdi-playlist-play"></i>
               </span>
@@ -120,7 +120,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_payment/">
+                    <a class="nav-link" href="{% url 'accounts_payment' %}">
                         <span class="menu-icon">
                 <i class="mdi mdi-table-large"></i>
               </span>
@@ -128,7 +128,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_payslip/">
+                    <a class="nav-link" href="{% url 'accounts_payslip' %}">
 
                         <span class="menu-icon">
                 <i class="mdi mdi-chart-bar"></i>
@@ -154,7 +154,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="/softwareapp/accounts_report/">
+                    <a class="nav-link" href="{% url 'accounts_report' %}">
                         <span class="menu-icon">
                 <i class="mdi mdi-file-document-box"></i>
               </span>
@@ -190,7 +190,7 @@
                                 <h6 class="p-3 mb-0">Profile</h6>
                                 <div class="dropdown-divider "></div>
                                 <div class="dropdown-divider "></div>
-                                <a class="dropdown-item preview-item" href="/softwareapp/logout5/">
+                                <a class="dropdown-item preview-item" href="{% url 'logout5' %}">
                                     <div class="preview-thumbnail ">
                                         <div class="preview-icon bg-dark rounded-circle ">
                                             <i class="mdi mdi-logout text-danger "></i></div>

@@ -14,7 +14,6 @@ class create_team(models.Model):
     def str(self):
         return self.name
 
-
 class designation(models.Model):
     designation_name = models.CharField(max_length=100)
     designation_status = models.CharField(max_length=100)
@@ -37,10 +36,8 @@ class course(models.Model):
                              related_name='coursecategory', null=True, blank=True)
     course_duration=models.CharField(max_length=200)
 
-
     def str(self):
         return self.name
-
 
 class user_registration(models.Model):
     designation = models.ForeignKey(designation, on_delete=models.SET_NULL,

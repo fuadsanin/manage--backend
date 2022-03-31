@@ -3,7 +3,7 @@
 <div class="row" style="padding-top:20px;">
     {% for i in des %}
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_emp_list/{{mem1.id}}/{{i.id}}/" style="text-decoration: none">
+        <a href="{% url 'accounts_emp_list' i.id %}" style="text-decoration: none">
             <div class="card" style="height: 180px">
                 <div class="card-body">
                     <div class="row" style="padding-top:10px;">

@@ -1,5 +1,11 @@
 {%extends 'software_training/training/account/base_accounts.html'%} {% load static %} {% block content %}
 
+<style>
+    table tr {
+        cursor: pointer;
+    }
+</style>
+
 <div class="row mt-3">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 grid-margin">
         <div class="card">
@@ -20,26 +26,29 @@
                     <table class="table " id="myTables">
                         <thead>
                             <tr data-href="#">
-                                <th>SlNo</th>
-                                <th>Name</th>
+
+                                <th>Name</th>{% for use in use %} {% if use.designation.designation_name == 'trainer' %}
+                                <th>Course</th>{% endif %}{% endfor %}
                                 <th>Join Date</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {% for i in use %}
-                            <tr data-href="/softwareapp/accounts_emp_details/{{i.id}}/">
-                                <td>{{ forloop.counter }}</td>
+                        <tbody>{% if use %} {% for i in use %}
+                            <tr data-href="{% url 'accounts_emp_details' i.id %}">
+
                                 <td>
-                                    <img src="{{media_url}}{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
-                                    <span class="ps-2">{{i.fullname}}</span></a>
-                                </td>
+                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image">
+                                    <span>{{i.fullname}}</span></a>
+                                </td>{% if i.designation.designation_name == 'trainer' %}
+                                <td>{{i.course.course_name}}</td>{% endif %}
                                 <td>{{i.joiningdate}}</td>
                                 <td>{{i.startdate}}</td>
                                 <td>{{i.enddate}}</td>
                             </tr>
-                            {% endfor %}
+                            {% endfor %} {% else %}
+                            <h5>Nothing to display...</h5>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

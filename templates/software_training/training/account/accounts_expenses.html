@@ -15,37 +15,37 @@
                             <h4 class="page-title"> EXPENSES </h4>
                         </div>
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                            <a href="/softwareapp/accounts_expense_newTransaction/" class="btn btn-outline-primary btn-icon-text" style="height: 50px;width: 110px;">New Transaction</a>
+                            <a href="{% url 'accounts_expense_newTransaction' %}" style="text-decoration: none" class="btn btn-outline-primary btn-icon-text " style="height: 50px;width: 110px; ">New Transaction</a>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table  table-bordered w-80">
+                    <div class="table-responsive ">
+                        <table class="table table-bordered w-80 ">
                             <thead>
                                 <tr>
                                     <th class="text-white ">
                                         Date
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Payee
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Category
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Total Before Tax
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Tax
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Total
                                     </th>
-                                    <th class="text-white">
+                                    <th class="text-white ">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="text-inherit">
+                            <tbody class="text-inherit ">
                                 <br> {% for i in vars %}
                                 <tr>
                                     <td>
@@ -66,17 +66,17 @@
                                     </td>
                                     <td>
 
-                                        <a href="/softwareapp/accounts_expenses_viewEdit/{{i.id}}" class="btn btn-outline-primary btn-icon-text">View/Edit</a>
+                                        <a href="{% url 'accounts_expenses_viewEdit' i.id %}" class="btn btn-outline-primary btn-icon-text ">View/Edit</a>
                                     </td>
 
                                 </tr>
                                 {% endfor %}
                             </tbody>
                             <tr>
-                                <td colspan="5" class="text-white" style="text-align: center;">
+                                <td colspan="5 " class="text-white " style="text-align: center; ">
                                     Total
                                 </td>
-                                <td id="totalsalary" colspan="2" class="text-white" style="padding-right: 20px;"></td>
+                                <td id="totalsalary" colspan="2 " class="text-white " style="padding-right: 20px; "></td>
                             </tr>
                         </table>
                 </form>

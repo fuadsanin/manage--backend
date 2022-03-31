@@ -123,7 +123,7 @@
             </div>
         </div>
 
-        <form method="post" action="/softwareapp/imagechange_accounts/?id={{mem.id}}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'imagechange_accounts' mem.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="modal" id="myModal{{mem.id}}">
                 <div class="modal-dialog">

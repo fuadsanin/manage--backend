@@ -12,6 +12,7 @@ from django.conf import settings
 import qrcode
 from django.contrib.auth.models import auth, User
 from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -613,23 +614,40 @@ def imagechange_accounts(request):
 
 def changepassword_accounts(request):
     if 'acc_id' in request.session:
+        if request.session.has_key('acc_fullname'):
+            acc_fullname = request.session['acc_fullname']
+        if request.session.has_key('acc_designation_id'):
+            acc_designation_id = request.session['acc_designation_id']
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
-        mem = user_registration.objects.filter(id= acc_id)
+        else:
+            acc_fullname = "dummy"
+        mem = user_registration.objects.filter(designation_id=acc_designation_id,id=acc_id).filter(fullname=acc_fullname)
+
+        # mem = user_registration.objects.filter(id=acc_id)
+    
         if request.method == 'POST':
-                abc = user_registration.objects.get(id=acc_id) 
-                oldps = request.POST['currentPassword']
-                newps = request.POST['newPassword']
-                cmps = request.POST.get('confirmPassword')
-                if oldps != newps:
-                    if newps == cmps:
-                        abc.password = request.POST.get('confirmPassword')
-                        abc.save()
-                        return render(request, 'software_training/training/account/accounts_Dashboard.html', {'mem': mem})
-                    return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem})
-                return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem})
+            abc = user_registration.objects.get(id=acc_id)
+    
+            oldps = request.POST['currentPassword']
+            newps = request.POST['newPassword']
+            cmps = request.POST.get('confirmPassword')
+            if oldps != newps:
+                if newps == cmps:
+                    abc.password = request.POST.get('confirmPassword')
+                    abc.save()
+                    return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem,})
+            elif oldps == newps:
+                messages.add_message(request, messages.INFO, 'Current and New password same')
+            else:
+                messages.info(request, 'Incorrect password same')
+    
+            return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem,})
+    
+        return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem,})
+
     else:
-        return redirect('/')    
+        return redirect('/')   
 
 
 def accounts_registration_details(request):
@@ -653,7 +671,7 @@ def accounts_payment_detail_list(request, id):
         mem = user_registration.objects.filter(id=acc_id)
         a = user_registration.objects.get(id=id)
         c = course.objects.get(id=a.course_id)  
-        pay = paymentlist.objects.filter(paymentlist_user_id = a.id).order_by('-id')
+        pay = paymentlist.objects.filter(paymentlist_user_id = a.id).order_by('-id') 
         return render(request,'software_training/training/account/accounts_payment_detail_list.html',{ 'mem' : mem, 'pay': pay , 'a':a , 'c':c})
     else:
         return redirect('/')
@@ -697,7 +715,7 @@ def accounts_payment_salary(request,id):
             abc.acntspayslip_deltype = request.POST["deltype"]
             abc.acntspayslip_leatype = request.POST["leatype"] 
 
-            abc.acntspayslip_user_id = vars.id
+            abc.acntspayslip_user_id = user_registration.objects.get(id=id)
             abc.acntspayslip_designation = vars.designation.id
             abc.save()
         return render(request, 'software_training/training/account/accounts_payment_salary.html',{'vars':vars,'mem' : mem})
@@ -760,8 +778,6 @@ def accounts_reported_issue(request):
     else:
         redirect('/')
 
-def accounts_acntpay(request):
-    return render(request, 'software_training/training/account/accounts_acntpay.html')
 
 def accounts_employee(request):
     if 'acc_id' in request.session:
@@ -774,26 +790,26 @@ def accounts_employee(request):
         return redirect('/')
 
 
-def accounts_emp_dep(request, id):
+def accounts_emp_dep(request):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
-        mem1 = course.objects.get(id=id)
-        des=designation.objects.all()
-        context = {'mem1':mem1,'des':des,'mem' : mem}
+       # mem1 = course.objects.get(id=id)
+        des=designation.objects.all().exclude(designation_name = 'trainee')
+        context = {'des':des,'mem' : mem}
         return render(request, 'software_training/training/account/accounts_emp_dep.html', context)
     else:
         return redirect('/')
     
-def accounts_emp_list(request, id , pk): 
+def accounts_emp_list(request, id): 
     if 'acc_id' in request.session: 
         if request.session.has_key('acc_id'): 
             acc_id = request.session['acc_id'] 
         mem = user_registration.objects.filter(id=acc_id)   
-        mem2 = designation.objects.get(id=pk) 
-        a = course.objects.get(id=id) 
-        use = user_registration.objects.filter(course_id=a,designation=mem2) 
+        mem2 = designation.objects.get(id=id)
+        
+        use = user_registration.objects.filter(designation=mem2) 
         context = {'use':use,'mem' : mem} 
         return render(request, 'software_training/training/account/accounts_emp_list.html', context) 
     else: 
@@ -911,13 +927,6 @@ def accounts_expense_newTransaction(request):
     else:
         return redirect('/')
   
-
-def accounts_paydetails(request):
-    return render(request, 'software_training/training/account/accounts_paydetails.html')
-
-def accounts_print(request):
-    return render(request, 'software_training/training/account/accounts_print.html')
-
 def accounts_payment(request):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
@@ -953,7 +962,7 @@ def accounts_payment_list(request,id,pk):
     else:
         return redirect('/')
 
-def accounts_payment_details(request, id):
+def account_payment_details(request, id):
     if 'acc_id' in request.session: 
         if request.session.has_key('acc_id'):  
             acc_id = request.session['acc_id'] 
@@ -961,6 +970,17 @@ def accounts_payment_details(request, id):
         vars = user_registration.objects.get(id=id) 
         context = {'vars':vars,'mem' : mem} 
         return render(request, 'software_training/training/account/account_payment_details.html', context) 
+    else:
+        return redirect('/')
+
+def accounts_payment_details(request, id):
+    if 'acc_id' in request.session: 
+        if request.session.has_key('acc_id'):  
+            acc_id = request.session['acc_id'] 
+        mem = user_registration.objects.filter(id=acc_id)
+        vars = user_registration.objects.get(id=id) 
+        context = {'vars':vars,'mem' : mem} 
+        return render(request, 'software_training/training/account/accounts_payment_details.html', context) 
     else:
         return redirect('/')
     
@@ -973,4 +993,40 @@ def accounts_payslip(request):
         return render(request, 'software_training/training/account/accounts_payslip.html', {'des':des,'mem':mem})      
     else:
         return redirect('/')
+
+@csrf_exempt
+def accounts_acntpay(request):
+    if 'acc_id' in request.session:
+        fdate = request.POST['fdate']
+        tdate = request.POST['tdate']
+        desig_id = int(request.POST['desi'])  
+        names = acntspayslip.objects.filter(acntspayslip_fromdate__range=(fdate,tdate),acntspayslip_designation= desig_id).values('acntspayslip_user_id__fullname','acntspayslip_eno', 'acntspayslip_user_id__account_no', 'acntspayslip_user_id__bank_name', 'acntspayslip_user_id__bank_branch','acntspayslip_user_id__id', 'acntspayslip_user_id__email')  
+        print(fdate)
+        print(tdate)
+      
+        print(desig_id)
+        print(names)
+        return render(request, 'software_training/training/account/accounts_acntpay.html')
+    else:
+        return redirect('/')
     
+def accounts_paydetails(request,id):
+     if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)  
+        user = user_registration.objects.get(id=id)
+        acc = acntspayslip.objects.get(user_id=id)
+        names = acntspayslip.objects.all()
+        return render(request, 'software_training/training/account/accounts_paydetails.html',{'acc':acc, 'user':user,'names':names, 'mem': mem})
+
+def accounts_print(request,id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)  
+        user = user_registration.objects.get(id=id)
+        acc = acntspayslip.objects.get(user_id=id)
+        return render(request, 'software_training/training/account/accounts_print.html',{'mem':mem, 'acc':acc, 'user':user,})
+    else:
+        return redirect('/')     

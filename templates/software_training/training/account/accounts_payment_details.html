@@ -12,6 +12,7 @@
                     <img src="{{vars.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
                 </div>
             </div>
+            <h1>welcome</h1>
             <p class="card-description"> Personal details </p>
             <div class="row">
                 <div class="col-md-6">
@@ -28,7 +29,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Gender:</label>
                         <div class="col-6">
-                            <p class="mt-2">{{vars.gender}}</p>
+                            <p class="mt-2">{{vars.gender}},{{vars.fullname}}</p>
                         </div>
                     </div>
                 </div>
@@ -50,14 +51,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="col-6 col-form-label">Trainer Name</label>
+                        <label class="col-6 col-form-label">Course: </label>
                         <div class="col-6 ">
-                            <p class="mt-2">{{tre.trainer}}</p>
+                            <p class="mt-2">{{vars.course.course_name}}</p>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <br><br><br><br>
                 <p class="card-description"> Address</p>
@@ -118,7 +119,7 @@
 
 <div class="row" style="padding-top:20px;">
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_payment_salary/{{vars.id}}/" style="text-decoration:none;">
+        <a href="{% url 'accounts_payment_salary' vars.id  %}" style="text-decoration:none;">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="row" style="padding-top:12px;">
@@ -137,7 +138,7 @@
     </div>
 
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_payment_view/{{vars.id}}/" style="text-decoration:none;">
+        <a href="{% url 'accounts_payment_view' vars.id %}" style="text-decoration:none;">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="row" style="padding-top:12px;">

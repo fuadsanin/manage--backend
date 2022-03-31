@@ -66,7 +66,7 @@
                                         <a href="{{i.paymentlist_amount_downlod.url}}" class="btn btn-outline-primary mr-2 ml-6  " style="font-size: 15px; font-weight: 100;" download>  Download</a> {% endif %}
                                     </td>
                                     <td>
-                                        <a href="/softwareapp/verify/{{i.id}}" class="btn btn-outline-warning mr-2 ml-6 btn-icon-text">Verify </a>
+                                        <a href="{% url 'verify' i.id %}" class="btn btn-outline-warning mr-2 ml-6 btn-icon-text">Verify </a>
 
                                         <!-- <button type="submit" class="btn btn-outline-warning mr-2 ml-6 btn-icon-text" id="balance" value="{{i.balance_amt}}">Verify</button> -->
                                     </td>
@@ -83,7 +83,7 @@
                                 <!-- <p>{{a.payment_balance}}</p> -->
                             </div>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
-                                <label class="">Total : {{c.total_fee}}</label>
+                                <label class="">Total : {{a.total_pay}}</label>
                                 <!-- <p>{{c.total_fee}}</p> -->
 
                             </div>

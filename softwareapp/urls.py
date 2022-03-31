@@ -455,7 +455,7 @@ urlpatterns = [
     #******************************Accounts****************************
 
     path('accounts_Dashboard/', training_views.accounts_Dashboard, name='accounts_Dashboard'),
-    path('accounts_registration_details/', training_views.accounts_registration_details, name='accounts_RegistrationDetails'),
+    path('accounts_registration_details/', training_views.accounts_registration_details, name='accounts_registration_details'),
     path('accounts_payment_detail_list/<int:id>/', training_views.accounts_payment_detail_list, name='accounts_payment_detail_list'),
     path('verify/<int:id>', training_views.verify, name='verify'),
     path('reminder/<int:id>', training_views.reminder, name='reminder'),
@@ -466,9 +466,9 @@ urlpatterns = [
     path('accounts_report/', training_views.accounts_report, name='accounts_report'),
     path('accounts_reported_issue/', training_views.accounts_reported_issue, name='accounts_reported_issue'),
     path('accounts_acntpay/', training_views.accounts_acntpay, name='accounts_acntpay'),
-    path('accounts_employee/', training_views.accounts_employee, name='accounts_employee'),
-    path('accounts_emp_dep/<int:id>/', training_views.accounts_emp_dep, name='accounts_emp_'),
-    path('accounts_emp_list/<int:id>/<int:pk>/', training_views.accounts_emp_list, name='accounts_emp_list'),
+   # path('accounts_employee/', training_views.accounts_employee, name='accounts_employee'),
+    path('accounts_emp_dep/', training_views.accounts_emp_dep, name='accounts_emp_dep'),
+    path('accounts_emp_list/<int:id>/', training_views.accounts_emp_list, name='accounts_emp_list'),
     path('accounts_emp_details/<int:id>/', training_views.accounts_emp_details, name='accounts_emp_details'),
     path('accounts_add_bank_acnt/<int:id>/', training_views.accounts_add_bank_acnt, name='accounts_add_bank_acnt'),
     path('accounts_bank_acnt_details/', training_views.accounts_bank_acnt_details, name='accounts_bank_acnt_details'),
@@ -477,17 +477,17 @@ urlpatterns = [
     path('accounts_expenses_viewEdit/<int:id>/', training_views.accounts_expenses_viewEdit, name='accounts_expenses_viewEdit'),
     path('accounts_expenses_viewEdit_Update/<int:id>/', training_views.accounts_expenses_viewEdit_Update, name='accounts_expenses_viewEdit_Update'),
     path('accounts_expense_newTransaction/', training_views.accounts_expense_newTransaction, name='accounts_expense_newTransaction'),
-    path('accounts_paydetails/', training_views.accounts_paydetails, name='accounts_paydetails'),
-    path('accounts_print/', training_views.accounts_print, name='accounts_print'),
-    path('accounts_payment/', training_views.accounts_payment, name='accounts_payment'),
+    path('accounts_paydetails/<int:id>/', training_views.accounts_paydetails, name='accounts_paydetails'),
+
     path('accounts_payment_dep/<int:id>/', training_views.accounts_payment_dep, name='accounts_payment_dep'),
     path('accounts_payment_list/<int:id>/<int:pk>/', training_views.accounts_payment_list, name='accounts_payment_list'),
-#    path('accounts_payment_details/', training_views.accounts_payment_details, name='accounts_payment_details'),
+    path('account_payment_details/<int:id>/', training_views.account_payment_details, name='account_payment_details'),
     
     path('accounts_payslip/', training_views.accounts_payslip, name='accounts_payslip'),
-    
+    path('accounts_print/<int:id>/', training_views.accounts_print, name='accounts_print'),
+    path('accounts_payment/<int:id>/', training_views.accounts_payment, name='accounts_payment'),
     path('account_accounts/', training_views.account_accounts, name='account_accounts'),
-    path('imagechange_accounts/', training_views.imagechange_accounts, name='imagechange_accounts'),
+    path('imagechange_accounts/<int:id>/', training_views.imagechange_accounts, name='imagechange_accounts'),
     path('changepassword_accounts/', training_views.changepassword_accounts, name='changepassword_accounts'),
     path('logout5/', training_views.logout5, name='logout5'),
 ]

@@ -27,11 +27,9 @@
                                 <th>End Date</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {% for i in use %}
-                            <tr data-href="/softwareapp/accounts_payment_details/{{i.id}}">
+                        <tbody>{% if use %} {% for i in use %}
+                            <tr data-href="{% url 'account_payment_details' i.id %}">
                                 <td>{{ forloop.counter }}</td>
-
                                 <td>
                                     <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
                                     <span class="ps-2">{{i.fullname}}</span></a>
@@ -40,7 +38,9 @@
                                 <td>{{i.startdate}}</td>
                                 <td>{{i.enddate}}</td>
                             </tr>
-                            {% endfor %}
+                            {% endfor %} {% else %}
+                            <h5>Nothing to display...</h5>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

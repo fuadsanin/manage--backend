@@ -49,14 +49,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="col-6 col-form-label">Trainer Name: </label>
+                        <label class="col-6 col-form-label">Course: </label>
                         <div class="col-6 ">
-                            <p class="mt-2">{{tre.trainer}}</p>
+                            <p class="mt-2">{{vars.course.course_name}}</p>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <br><br><br><br>
                 <p class="card-description"> Address</p>
@@ -117,7 +117,7 @@
 
 <div class="row" style="padding-top:20px;">
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_add_bank_acnt/{{vars.id}}" style="text-decoration:none;">
+        <a href="{% url 'accounts_add_bank_acnt' vars.id %}" style="text-decoration:none;">
             <div class="card" style="height: 180px">
                 <div class="card-body">
                     <div class="row" style="padding-top:20px;">
@@ -138,7 +138,7 @@
     </div>
 
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_salary_details/{{vars.id}}" style="text-decoration:none;">
+        <a href="{% url 'accounts_salary_details' vars.id %}" style="text-decoration:none;">
             <div class="card" style="height: 180px">
                 <div class="card-body">
                     <div class="row" style="padding-top:20px;">

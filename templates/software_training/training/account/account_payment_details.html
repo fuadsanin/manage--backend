@@ -1,5 +1,4 @@
 {%extends 'software_training/training/account/base_accounts.html'%} {% load static %} {% block content %}
-
 <div class="card mt-3 mb-5">
     <div class="card-body">
         <form class="form-sample">
@@ -8,16 +7,17 @@
                     <h4 class="card-description"> Personal Information </h4>
                 </div>
                 <div class="col-4 col-md-2">
-                    <img src="{% static 'softwareapp/assets/images/faces/face5.jpg' %}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
+                    <img src="{{vars.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
                 </div>
             </div>
+
             <p class="card-description"> Personal details </p>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Full Name:</label>
                         <div class="col-6">
-                            <p class="mt-2">John</p>
+                            <p class="mt-2">{{vars.fullname}}</p>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Gender:</label>
                         <div class="col-6">
-                            <p class="mt-2">Male</p>
+                            <p class="mt-2">{{vars.gender}},{{vars.fullname}}</p>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Date of Birth:</label>
                         <div class="col-6">
-                            <p class="mt-2">22/10/2000</p>
+                            <p class="mt-2">{{vars.dateofbirth|date:"d-m-Y"}}</p>
                         </div>
                     </div>
                 </div>
@@ -45,15 +45,15 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Category:</label>
                         <div class="col-6">
-                            <p class="mt-2"></p>
+                            <p class="mt-2">{{vars.designation.designation_name}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="col-6 col-form-label">Trainer Name</label>
+                        <label class="col-6 col-form-label">Course: </label>
                         <div class="col-6 ">
-                            <p class="mt-2">Smith</p>
+                            <p class="mt-2">{{vars.course.course_name}}</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Address1:</label>
                         <div class="col-6">
-                            <p class="mt-2">Infox kakkand</p>
+                            <p class="mt-2">{{vars.presentaddress1}}</p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">State:</label>
                         <div class="col-6">
-                            <p class="mt-2">Kerala</p>
+                            <p class="mt-2">{{vars.state}}</p>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Address2:</label>
                         <div class="col-6">
-                            <p class="mt-2">Infox kakkand</p>
+                            <p class="mt-2">{{vars.presentaddress2}}</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Postcode:</label>
                         <div class="col-6">
-                            <p class="mt-2">456876</p>
+                            <p class="mt-2">{{vars.pincode}}</p>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">City:</label>
                         <div class="col-6">
-                            <p class="mt-2">Eranakulam</p>
+                            <p class="mt-2">{{vars.city}}</p>
                         </div>
                     </div>
                 </div>
@@ -104,10 +104,11 @@
                     <div class="form-group row">
                         <label class="col-6 col-form-label">Country:</label>
                         <div class="col-6">
-                            <p class="mt-2">India</p>
+                            <p class="mt-2">{{vars.country}}</p>
                         </div>
                     </div>
                 </div>
+
         </form>
         </div>
     </div>
@@ -115,7 +116,7 @@
 
 <div class="row" style="padding-top:20px;">
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_payment_salary/" style="text-decoration:none;">
+        <a href="{% url 'accounts_payment_salary' vars.id %}" style="text-decoration:none;">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="row" style="padding-top:10px;">
@@ -134,7 +135,7 @@
     </div>
 
     <div class="col-sm-6 grid-margin">
-        <a href="/softwareapp/accounts_payment_view/" style="text-decoration:none;">
+        <a href="{% url 'accounts_payment_view' vars.id %}" style="text-decoration:none;">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="row" style="padding-top:10px;">

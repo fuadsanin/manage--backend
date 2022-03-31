@@ -12,7 +12,7 @@
 
                         <h5>EXPENSES</h5>
                         <div class="h-divider"></div><br><br>
-                        <form class="forms-sample" action="/softwareapp/accounts_expense_newTransaction/" method="post" autocomplete="off">
+                        <form class="forms-sample" action="{% url 'accounts_expense_newTransaction' %}" method="post" autocomplete="off">
                             {% csrf_token %}
                             <div class="row">
                                 <input type="hidden" class="form-control" name="team_id">
