@@ -459,9 +459,9 @@ urlpatterns = [
     path('accounts_payment_detail_list/<int:id>/', training_views.accounts_payment_detail_list, name='accounts_payment_detail_list'),
     path('verify/<int:id>', training_views.verify, name='verify'),
     path('reminder/<int:id>', training_views.reminder, name='reminder'),
-    path('accounts_payment_details/', training_views.accounts_payment_details, name='accounts_Payment'),
-    path('accounts_payment_salary/', training_views.accounts_payment_salary, name='accounts_payment_salary'),
-    path('accounts_payment_view/', training_views.accounts_payment_view, name='accounts_payment_view'),
+    path('accounts_payment_details/<int:id>/', training_views.accounts_payment_details, name='accounts_payment_details'),
+    path('accounts_payment_salary/<int:id>/', training_views.accounts_payment_salary, name='accounts_payment_salary'),
+    path('accounts_payment_view/<int:id>/', training_views.accounts_payment_view, name='accounts_payment_view'),
     path('accounts_report_issue/', training_views.accounts_report_issue, name='accounts_report_issue'),
     path('accounts_report/', training_views.accounts_report, name='accounts_report'),
     path('accounts_reported_issue/', training_views.accounts_reported_issue, name='accounts_reported_issue'),
@@ -469,10 +469,10 @@ urlpatterns = [
     path('accounts_employee/', training_views.accounts_employee, name='accounts_employee'),
     path('accounts_emp_dep/<int:id>/', training_views.accounts_emp_dep, name='accounts_emp_'),
     path('accounts_emp_list/<int:id>/<int:pk>/', training_views.accounts_emp_list, name='accounts_emp_list'),
-    path('accounts_emp_details/', training_views.accounts_emp_details, name='accounts_emp_details'),
-    path('accounts_add_bank_acnt/', training_views.accounts_add_bank_acnt, name='accounts_add_bank_acnt'),
+    path('accounts_emp_details/<int:id>/', training_views.accounts_emp_details, name='accounts_emp_details'),
+    path('accounts_add_bank_acnt/<int:id>/', training_views.accounts_add_bank_acnt, name='accounts_add_bank_acnt'),
     path('accounts_bank_acnt_details/', training_views.accounts_bank_acnt_details, name='accounts_bank_acnt_details'),
-    path('accounts_salary_details/', training_views.accounts_salary_details, name='accounts_salary_details'),
+    path('accounts_salary_details/<int:id>/', training_views.accounts_salary_details, name='accounts_salary_details'),
     path('accounts_expenses/', training_views.accounts_expenses, name='accounts_expenses'),
     path('accounts_expenses_viewEdit/<int:id>/', training_views.accounts_expenses_viewEdit, name='accounts_expenses_viewEdit'),
     path('accounts_expenses_viewEdit_Update/<int:id>/', training_views.accounts_expenses_viewEdit_Update, name='accounts_expenses_viewEdit_Update'),
@@ -482,11 +482,14 @@ urlpatterns = [
     path('accounts_payment/', training_views.accounts_payment, name='accounts_payment'),
     path('accounts_payment_dep/<int:id>/', training_views.accounts_payment_dep, name='accounts_payment_dep'),
     path('accounts_payment_list/<int:id>/<int:pk>/', training_views.accounts_payment_list, name='accounts_payment_list'),
-    path('accounts_payment_details/', training_views.accounts_payment_details, name='accounts_payment_details'),
+#    path('accounts_payment_details/', training_views.accounts_payment_details, name='accounts_payment_details'),
     
     path('accounts_payslip/', training_views.accounts_payslip, name='accounts_payslip'),
-
-   
+    
+    path('account_accounts/', training_views.account_accounts, name='account_accounts'),
+    path('imagechange_accounts/', training_views.imagechange_accounts, name='imagechange_accounts'),
+    path('changepassword_accounts/', training_views.changepassword_accounts, name='changepassword_accounts'),
+    path('logout5/', training_views.logout5, name='logout5'),
 ]
 
 

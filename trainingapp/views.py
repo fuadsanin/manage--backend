@@ -583,6 +583,55 @@ def accounts_Dashboard(request):
     else:
         return redirect('/')
 
+def logout5(request):
+    if 'acc_id' in request.session:  
+        request.session.flush()
+        return redirect('/')
+    else:
+        return redirect('/') 
+
+def account_accounts(request):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id= acc_id)
+        return render(request, 'software_training/training/account/account_accounts.html', {'mem': mem})
+    else:
+        return redirect('/')
+
+def imagechange_accounts(request): 
+    if 'acc_id' in request.session:
+        if request.method == 'POST':
+            id = request.GET.get('id')
+            abc = user_registration.objects.get(id=id)
+            abc.photo = request.FILES['filenamees']
+            abc.save()
+            return redirect('account_accounts')
+        return render(request, 'software_training/training/account/account_accounts.html')
+    else:
+        return redirect('/')
+
+def changepassword_accounts(request):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id= acc_id)
+        if request.method == 'POST':
+                abc = user_registration.objects.get(id=acc_id) 
+                oldps = request.POST['currentPassword']
+                newps = request.POST['newPassword']
+                cmps = request.POST.get('confirmPassword')
+                if oldps != newps:
+                    if newps == cmps:
+                        abc.password = request.POST.get('confirmPassword')
+                        abc.save()
+                        return render(request, 'software_training/training/account/accounts_Dashboard.html', {'mem': mem})
+                    return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem})
+                return render(request, 'software_training/training/account/changepassword_accounts.html', {'mem': mem})
+    else:
+        return redirect('/')    
+
+
 def accounts_registration_details(request):
 
     if 'acc_id' in request.session:
@@ -597,7 +646,6 @@ def accounts_registration_details(request):
     else:
         return redirect('/')
     
-
 def accounts_payment_detail_list(request, id):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
@@ -605,14 +653,14 @@ def accounts_payment_detail_list(request, id):
         mem = user_registration.objects.filter(id=acc_id)
         a = user_registration.objects.get(id=id)
         c = course.objects.get(id=a.course_id)  
-        pay = paymentlist.objects.filter(paymentlist_user_id_id= a.id).order_by('-id')
+        pay = paymentlist.objects.filter(paymentlist_user_id = a.id).order_by('-id')
         return render(request,'software_training/training/account/accounts_payment_detail_list.html',{ 'mem' : mem, 'pay': pay , 'a':a , 'c':c})
     else:
         return redirect('/')
 
 def verify(request,id):
     rem = paymentlist.objects.get(id=id)
-    rem.amount_status = 1
+    rem.paymentlist_amount_status = 1
     rem.save()
     return redirect('/softwareapp/accounts_registration_details')
     
@@ -622,11 +670,50 @@ def reminder(request,id):
     rem.save()
     return redirect('/softwareapp/accounts_registration_details')
     
-def accounts_payment_salary(request):
-    return render(request, 'software_training/training/account/account_payment_salary.html')
+def accounts_payment_salary(request,id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        vars=user_registration.objects.get(id=id)
+        if request.method == "POST":
+            abc = acntspayslip()
+            abc.acntspayslip_basic_salary = request.POST["salary"] 
+            abc.acntspayslip_hra = request.POST["hra"] 
+            abc.acntspayslip_conveyns = request.POST["ca"] 
+            abc.acntspayslip_pf_tax = request.POST["pt"] 
+            abc.acntspayslip_incentives = request.POST["ins"] 
+            abc.acntspayslip_delay = request.POST["delay"] 
+            abc.acntspayslip_leavesno= request.POST["leave"] 
+            abc.acntspayslip_fromdate= request.POST["efdate"] 
+            abc.acntspayslip_tax = 0
+            abc.acntspayslip_pf = 0 
+            abc.acntspayslip_incometax = 0 
+            abc.acntspayslip_basictype = request.POST["basictype"] 
+            abc.acntspayslip_hratype = request.POST["hratype"] 
+            abc.acntspayslip_contype = request.POST["contype"] 
+            abc.acntspayslip_protype = request.POST["protype"]
+            abc.acntspayslip_instype = request.POST["instype"]
+            abc.acntspayslip_deltype = request.POST["deltype"]
+            abc.acntspayslip_leatype = request.POST["leatype"] 
 
-def accounts_payment_view(request):
-    return render(request, 'software_training/training/account/account_payment_view.html')
+            abc.acntspayslip_user_id = vars.id
+            abc.acntspayslip_designation = vars.designation.id
+            abc.save()
+        return render(request, 'software_training/training/account/accounts_payment_salary.html',{'vars':vars,'mem' : mem})
+    else:
+        return redirect('/')
+    
+def accounts_payment_view(request, id):
+    if 'acc_id' in request.session:
+        if request.session.has_key('acc_id'):
+            acc_id = request.session['acc_id']
+        mem = user_registration.objects.filter(id=acc_id)
+        reg =user_registration.objects.get(id=id)
+        use =acntspayslip.objects.filter(acntspayslip_user_id=id)
+        return render(request, 'software_training/training/account/accounts_payment_view.html',{'mem':mem, 'use':use, 'reg':reg})
+    else:
+        redirect('/')
 
 
 def accounts_report(request):
@@ -699,39 +786,61 @@ def accounts_emp_dep(request, id):
     else:
         return redirect('/')
     
-def accounts_emp_list(request, id , pk):
-    if 'acc_id' in request.session:
-        if request.session.has_key('acc_id'):
-            acc_id = request.session['acc_id']
-        mem = user_registration.objects.filter(id=acc_id)  
-        mem2 = designation.objects.get(pk=pk)
-        a = course.objects.get(id=id)
-        use=user_registration.objects.filter(course_id=a,designation=mem2)
-        context = {'use':use,'mem' : mem}
-        return render(request, 'software_training/training/account/accounts_emp_list.html', context)
-    else:
-        return redirect('/')
+def accounts_emp_list(request, id , pk): 
+    if 'acc_id' in request.session: 
+        if request.session.has_key('acc_id'): 
+            acc_id = request.session['acc_id'] 
+        mem = user_registration.objects.filter(id=acc_id)   
+        mem2 = designation.objects.get(id=pk) 
+        a = course.objects.get(id=id) 
+        use = user_registration.objects.filter(course_id=a,designation=mem2) 
+        context = {'use':use,'mem' : mem} 
+        return render(request, 'software_training/training/account/accounts_emp_list.html', context) 
+    else: 
+        return redirect('/') 
     
-def accounts_emp_details(request, id):
-    if 'acc_id' in request.session:
-        if request.session.has_key('acc_id'):
-            acc_id = request.session['acc_id']
-        mem = user_registration.objects.filter(id=acc_id)  
-        vars=user_registration.objects.get(id=id)
-        context = {'vars':vars,'mem' : mem}
-        return render(request, 'software_training/training/account/accounts_emp_details.html', context)
+def accounts_emp_details(request, id): 
+    if 'acc_id' in request.session: 
+        if request.session.has_key('acc_id'): 
+            acc_id = request.session['acc_id'] 
+        mem = user_registration.objects.filter(id=acc_id)   
+        vars=user_registration.objects.get(id=id) 
+        context = {'vars':vars,'mem' : mem} 
+        return render(request, 'software_training/training/account/accounts_emp_details.html', context) 
     else:
-        return redirect('/')
+        return redirect('/') 
     
 
-def accounts_add_bank_acnt(request):
-    return render(request, 'software_training/training/account/accounts_add_bank_acnt.html')
+def accounts_add_bank_acnt(request, id):
+    if 'acc_id' in request.session:  
+        if request.session.has_key('acc_id'):  
+            acc_id = request.session['acc_id']  
+        mem = user_registration.objects.filter(id=acc_id) 
+        mem1 = user_registration.objects.filter(id=id) 
+        if request.method == 'POST': 
+            vars = user_registration.objects.get(id=id) 
+            vars.account_no = request.POST['account_no'] 
+            vars.ifsc = request.POST['ifsc'] 
+            vars.bank_branch = request.POST['bank_branch'] 
+            vars.bank_name= request.POST['bank_name'] 
+            vars.save() 
+        return render(request, 'software_training/training/account/accounts_add_bank_acnt.html',{'mem':mem, 'mem1':mem1})
+    else:
+        return redirect('/')
 
 def accounts_bank_acnt_details(request):
     return render(request, 'software_training/training/account/accounts_bank_acnt_details.html')
 
-def accounts_salary_details(request):
-    return render(request, 'software_training/training/account/accounts_salary_details.html')
+def accounts_salary_details(request, id):
+    if 'acc_id' in request.session:  
+        if request.session.has_key('acc_id'):  
+            acc_id = request.session['acc_id']  
+        mem = user_registration.objects.filter(id=acc_id) 
+        mem1=user_registration.objects.filter(id=id)
+        usk=acntspayslip.objects.filter(acntspayslip_user_id =id)
+        return render(request, 'software_training/training/account/accounts_salary_details.html',{ 'mem1':mem1,'usk':usk,'mem': mem})
+    else:
+        return redirect('/')
 
 def accounts_expenses(request):
     if 'acc_id' in request.session:
@@ -844,12 +953,17 @@ def accounts_payment_list(request,id,pk):
     else:
         return redirect('/')
 
-def accounts_payment_details(request):
-
-    return render(request, 'software_training/training/account/accounts_payment_details.html')
-
-
-
+def accounts_payment_details(request, id):
+    if 'acc_id' in request.session: 
+        if request.session.has_key('acc_id'):  
+            acc_id = request.session['acc_id'] 
+        mem = user_registration.objects.filter(id=acc_id)
+        vars = user_registration.objects.get(id=id) 
+        context = {'vars':vars,'mem' : mem} 
+        return render(request, 'software_training/training/account/account_payment_details.html', context) 
+    else:
+        return redirect('/')
+    
 def accounts_payslip(request):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):

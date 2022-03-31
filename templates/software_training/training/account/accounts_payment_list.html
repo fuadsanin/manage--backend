@@ -29,11 +29,11 @@
                         </thead>
                         <tbody>
                             {% for i in use %}
-                            <tr data-href="/softwareapp/account_payment_details/{{i.id}}/">
+                            <tr data-href="/softwareapp/accounts_payment_details/{{i.id}}">
                                 <td>{{ forloop.counter }}</td>
 
                                 <td>
-                                    <img src="{{media_url}}{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
+                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
                                     <span class="ps-2">{{i.fullname}}</span></a>
                                 </td>
                                 <td>{{i.joiningdate}}</td>
@@ -57,7 +57,7 @@
         table = document.getElementById("myTables");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
