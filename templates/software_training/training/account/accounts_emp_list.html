@@ -26,7 +26,7 @@
                     <table class="table " id="myTables">
                         <thead>
                             <tr data-href="#">
-
+                                <th>SlNo</th>
                                 <th>Name</th>{% for use in use %} {% if use.designation.designation_name == 'trainer' %}
                                 <th>Course</th>{% endif %}{% endfor %}
                                 <th>Join Date</th>
@@ -34,13 +34,14 @@
                                 <th>End Date</th>
                             </tr>
                         </thead>
+
                         <tbody>{% if use %} {% for i in use %}
                             <tr data-href="{% url 'accounts_emp_details' i.id %}">
-
+                                <td>{{forloop.counter }}</td>
                                 <td>
-                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image">
-                                    <span>{{i.fullname}}</span></a>
-                                </td>{% if i.designation.designation_name == 'trainer' %}
+                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-sm-1 " alt="image">
+                                    <span class="ps-1">{{i.fullname}}</span></td>
+                                {% if i.designation.designation_name == 'trainer' %}
                                 <td>{{i.course.course_name}}</td>{% endif %}
                                 <td>{{i.joiningdate}}</td>
                                 <td>{{i.startdate}}</td>

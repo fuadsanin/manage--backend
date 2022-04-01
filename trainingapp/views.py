@@ -716,7 +716,9 @@ def accounts_payment_salary(request,id):
             abc.acntspayslip_leatype = request.POST["leatype"] 
 
             abc.acntspayslip_user_id = user_registration.objects.get(id=id)
-            abc.acntspayslip_designation = vars.designation.id
+            print(vars.designation.id)
+            # abc.acntspayslip_designation = vars.designation.id 
+            print(abc.acntspayslip_designation)
             abc.save()
         return render(request, 'software_training/training/account/accounts_payment_salary.html',{'vars':vars,'mem' : mem})
     else:
@@ -937,26 +939,25 @@ def accounts_payment(request):
     else:
         return redirect('/')
   
-def accounts_payment_dep(request, id):
+def accounts_payment_dep(request):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
-        mem1 = course.objects.get(id=id)
-        des = designation.objects.all()
-        context = {'mem1':mem1,'des':des,'mem' : mem}
+        des = designation.objects.all().exclude(designation_name = 'trainee')
+        context = {'des':des,'mem' : mem}
         return render(request, 'software_training/training/account/accounts_payment_dep.html',context)
     else:
         return redirect('/')
 
-def accounts_payment_list(request,id,pk):
+def accounts_payment_list(request,id):
     if 'acc_id' in request.session:
         if request.session.has_key('acc_id'):
             acc_id = request.session['acc_id']
         mem = user_registration.objects.filter(id=acc_id)
-        var = course.objects.get(id=id)
-        mem1 = designation.objects.get(pk=pk)
-        use=user_registration.objects.filter(course_id=var,designation=mem1)
+        
+        mem1 = designation.objects.get(id=id)
+        use=user_registration.objects.filter(designation=mem1)
         context = {'use':use, 'mem':mem}
         return render(request,'software_training/training/account/accounts_payment_list.html',context)
     else:

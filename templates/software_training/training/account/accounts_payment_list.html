@@ -21,7 +21,8 @@
                         <thead>
                             <tr data-href="#">
                                 <th>SlNo</th>
-                                <th>Name</th>
+                                <th>Name</th>{% for use in use %} {% if use.designation.designation_name == 'trainer' %}
+                                <th>Course</th>{% endif %}{% endfor %}
                                 <th>Join Date</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
@@ -31,9 +32,10 @@
                             <tr data-href="{% url 'account_payment_details' i.id %}">
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-3 " alt="image" style="margin-right:20px">
-                                    <span class="ps-2">{{i.fullname}}</span></a>
-                                </td>
+                                    <img src="{{i.photo.url}}" class="img-fluid rounded-circle mb-1 " alt="image">
+                                    <span class="ps-1">{{i.fullname}}</span></a>
+                                </td>{% if i.designation.designation_name == 'trainer' %}
+                                <td>{{i.course.course_name}}</td>{% endif %}
                                 <td>{{i.joiningdate}}</td>
                                 <td>{{i.startdate}}</td>
                                 <td>{{i.enddate}}</td>

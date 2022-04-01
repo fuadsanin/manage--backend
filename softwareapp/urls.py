@@ -477,15 +477,15 @@ urlpatterns = [
     path('accounts_expenses_viewEdit/<int:id>/', training_views.accounts_expenses_viewEdit, name='accounts_expenses_viewEdit'),
     path('accounts_expenses_viewEdit_Update/<int:id>/', training_views.accounts_expenses_viewEdit_Update, name='accounts_expenses_viewEdit_Update'),
     path('accounts_expense_newTransaction/', training_views.accounts_expense_newTransaction, name='accounts_expense_newTransaction'),
-    path('accounts_paydetails/<int:id>/', training_views.accounts_paydetails, name='accounts_paydetails'),
-
-    path('accounts_payment_dep/<int:id>/', training_views.accounts_payment_dep, name='accounts_payment_dep'),
-    path('accounts_payment_list/<int:id>/<int:pk>/', training_views.accounts_payment_list, name='accounts_payment_list'),
+   
+    #path('accounts_payment/', training_views.accounts_payment, name='accounts_payment'),
+    path('accounts_payment_dep/', training_views.accounts_payment_dep, name='accounts_payment_dep'),
+    path('accounts_payment_list/<int:id>/', training_views.accounts_payment_list, name='accounts_payment_list'),
     path('account_payment_details/<int:id>/', training_views.account_payment_details, name='account_payment_details'),
     
     path('accounts_payslip/', training_views.accounts_payslip, name='accounts_payslip'),
     path('accounts_print/<int:id>/', training_views.accounts_print, name='accounts_print'),
-    path('accounts_payment/<int:id>/', training_views.accounts_payment, name='accounts_payment'),
+    path('accounts_paydetails/<int:id>/', training_views.accounts_paydetails, name='accounts_paydetails'),
     path('account_accounts/', training_views.account_accounts, name='account_accounts'),
     path('imagechange_accounts/<int:id>/', training_views.imagechange_accounts, name='imagechange_accounts'),
     path('changepassword_accounts/', training_views.changepassword_accounts, name='changepassword_accounts'),

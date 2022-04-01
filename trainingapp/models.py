@@ -45,8 +45,8 @@ class user_registration(models.Model):
     team = models.ForeignKey(create_team, on_delete=models.SET_NULL,
                              related_name='userregistrationteam', null=True, blank=True)
     course = models.ForeignKey(course, on_delete=models.SET_NULL, related_name='coursename',null=True,blank=True)
-    category=models.ForeignKey(category, on_delete=models.SET_NULL,
-                             related_name='catgname', null=True, blank=True)
+    category = models.ForeignKey(category, on_delete=models.SET_NULL,
+                             related_name='catgname', null=True, blank=True)      
     fullname = models.CharField(max_length=240, null=True)
     fathername = models.CharField(max_length=240, null=True)
     mothername = models.CharField(max_length=240, null=True)

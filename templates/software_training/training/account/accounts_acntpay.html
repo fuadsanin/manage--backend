@@ -14,17 +14,17 @@
             <tbody>
                 {% if names %} {% for i in names %}
                 <tr>
-                    <td>{{i.user_id__fullname}}</td>
-                    <td>{{i.eno}}
+                    <td>{{i.acntspayslip_user_id__fullname}}</td>
+                    <td>{{i.acntspayslip_eno}}
                     </td>
                     <td>
-                        {{i.user_id__account_no}}</td>
+                        {{i.acntspayslip_user_id__account_no}}</td>
                     <td>
-                        {{i.user_id__bank_name}}</td>
+                        {{i.acntspayslip_user_id__bank_name}}</td>
                     <td>
-                        {{i.user_id__bank_branch}}</td>
+                        {{i.acntspayslip_user_id__bank_branch}}</td>
                     <td>
-                        {{i.user_id__email}}</td>
+                        {{i.acntspayslip_user_id__email}}</td>
                     <td style="text-decoration: none;">
                         <a href="{% url 'accounts_paydetails' i.user_id__id %}">View slip</a></td>
                 </tr>
